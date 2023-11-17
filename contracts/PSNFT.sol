@@ -37,7 +37,6 @@ contract PSNFT is
 
     function mint(uint tokenId) public payable {
         require(msg.value >= price, "msg.value not enough");
-        // isLocked[tokenId] = true;
         uint distributorShare = msg.value / 2;
         uint creatorShare = msg.value - distributorShare;
 
@@ -46,26 +45,6 @@ contract PSNFT is
         payable(distributor).transfer(distributorShare);
         payable(creator).transfer(creatorShare);
         _safeMint(msg.sender, tokenId);
-    }
-
-    // The following functions are overrides required by Solidity.
-    function _update(
-        address to,
-        uint256 tokenId,
-        address auth
-    )
-        internal
-        override(ERC721Upgradeable, ERC721EnumerableUpgradeable)
-        returns (address)
-    {
-        return super._update(to, tokenId, auth);
-    }
-
-    function _increaseBalance(
-        address account,
-        uint128 value
-    ) internal override(ERC721Upgradeable, ERC721EnumerableUpgradeable) {
-        super._increaseBalance(account, value);
     }
 
     function supportsInterface(
