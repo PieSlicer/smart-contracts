@@ -18,7 +18,6 @@ contract DistributionTreasury {
     }
 
     function distributeShares() external {
-        address[] memory nftContracts = pieSlicer.getNFTContracts();
         address[] memory allOwners = pieSlicer.getHolders();
 
         uint totalSlices = pieSlicer.totalTokens();
@@ -26,17 +25,9 @@ contract DistributionTreasury {
         uint slice = address(this).balance / totalSlices;
 
         for (uint i = 0; i < allOwners.length; i++) {
-            uint totalBalance;
-            for (uint j = 0; j < nftContracts.length; j++) {
-                totalBalance += PSNFT(nftContracts[j]).balanceOf(allOwners[i]);
-            }
             payable(allOwners[i]).transfer(
-                    slice * psNFT.balanceOf(allOwners[i])
-                );
+                slice * pieSlicer.holderBalance(allOwners[i])
+            );
         }
     }
-
-    event MoreSlicesAdded();
-    event PieCut();
-    event SliceEaten();
 }

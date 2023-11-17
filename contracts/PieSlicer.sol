@@ -38,9 +38,22 @@ contract PieSlicer is Initializable, AccessControlUpgradeable {
         _grantRole(ADMIN_ROLE, defaultAdmin);
     }
 
+    function deployPSNFT(
+        string calldata tokenName,
+        string calldata tokenSymbol,
+        address creator,
+        uint price,
+        address distributor
+    ) external onlyRole(ADMIN_ROLE) {
+        PSNFT newNFT = new PSNFT(
+            tokenName,
+            tokenSymbol,
+            creator,
+            price,
+            distributor
+        );
 
-    function deployPSNFT() external {
-        // deploy
+        nftContracts.push(address(newNFT));
     }
 
     function getHolders() public view returns (address[] memory) {
@@ -63,5 +76,9 @@ contract PieSlicer is Initializable, AccessControlUpgradeable {
         uint amount
     ) public onlyPSNContract {
         holderBalance[holder] -= amount;
+    }
+
+    function increaseTotalTokens(uint amount) public onlyPSNContract {
+        totalTokens += amount;
     }
 }
