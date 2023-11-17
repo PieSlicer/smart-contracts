@@ -7,27 +7,31 @@ import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "./PieSlicer.sol";
 
 contract DistributionTreasury {
-    uint distributionTime;
-    PSNFT psNFT;
+    // uint distributionTime;
     PieSlicer pieSlicer;
 
-    constructor(PSNFT _psNFT, uint _distributionTime, PieSlicer _pieSlicer) {
-        psNFT = _psNFT;
-        distributionTime = _distributionTime;
+    constructor(PieSlicer _pieSlicer) {
+        // distributionTime = _distributionTime;
         pieSlicer = _pieSlicer;
     }
+
+    event DistributionCompleted(uint totalSlices, uint slice);
 
     function distributeShares() external {
         address[] memory allOwners = pieSlicer.getHolders();
 
         uint totalSlices = pieSlicer.totalTokens();
+        require(totalSlices > 0, "no nfts sold");
 
         uint slice = address(this).balance / totalSlices;
+        require(slice > 0, "nothing to distribute");
 
         for (uint i = 0; i < allOwners.length; i++) {
             payable(allOwners[i]).transfer(
                 slice * pieSlicer.holderBalance(allOwners[i])
             );
         }
+
+        emit DistributionCompleted(totalSlices, slice);
     }
 }

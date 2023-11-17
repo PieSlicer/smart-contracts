@@ -4,10 +4,10 @@ pragma solidity ^0.8.20;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {PSNFT} from "./PSNFT.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import {DistributionTreasury} from "./DistributionTreasury.sol";
 
-contract PieSlicer is Initializable, AccessControlUpgradeable {
+contract PieSlicer is AccessControl {
     address[] holders;
     mapping(address => uint) public holderBalance;
 
@@ -15,6 +15,8 @@ contract PieSlicer is Initializable, AccessControlUpgradeable {
     uint public totalTokens;
 
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+
+    address public distributionTreasury;
 
     modifier onlyPSNContract() {
         bool isFound = false;
@@ -27,33 +29,32 @@ contract PieSlicer is Initializable, AccessControlUpgradeable {
         require(isFound, "not a psn contract");
     }
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
-        _disableInitializers();
+        _grantRole(ADMIN_ROLE, _msgSender());
+
+        distributionTreasury = address(
+            new DistributionTreasury(PieSlicer(address(this)))
+        );
     }
 
-    function initialize(address defaultAdmin) public initializer {
-        __AccessControl_init();
-
-        _grantRole(ADMIN_ROLE, defaultAdmin);
-    }
+    event PSNFTDeployed(address nft);
 
     function deployPSNFT(
         string calldata tokenName,
         string calldata tokenSymbol,
         address creator,
-        uint price,
-        address distributor
+        uint price
     ) external onlyRole(ADMIN_ROLE) {
         PSNFT newNFT = new PSNFT(
             tokenName,
             tokenSymbol,
             creator,
             price,
-            distributor
+            distributionTreasury
         );
 
         nftContracts.push(address(newNFT));
+        emit PSNFTDeployed(address(newNFT));
     }
 
     function getHolders() public view returns (address[] memory) {
@@ -64,11 +65,24 @@ contract PieSlicer is Initializable, AccessControlUpgradeable {
         return nftContracts;
     }
 
+    event HolderBalanceChange(
+        address holder,
+        uint newBalance,
+        uint oldBalance,
+        uint difference
+    );
+
     function increaseHolderBalance(
         address holder,
         uint amount
     ) public onlyPSNContract {
         holderBalance[holder] += amount;
+        emit HolderBalanceChange(
+            holder,
+            holderBalance[holder],
+            holderBalance[holder] - amount,
+            amount
+        );
     }
 
     function decreaseHolderBalance(
@@ -76,9 +90,18 @@ contract PieSlicer is Initializable, AccessControlUpgradeable {
         uint amount
     ) public onlyPSNContract {
         holderBalance[holder] -= amount;
+        emit HolderBalanceChange(
+            holder,
+            holderBalance[holder],
+            holderBalance[holder] + amount,
+            amount
+        );
     }
+
+    event TotalTokensIncreased(uint amount);
 
     function increaseTotalTokens(uint amount) public onlyPSNContract {
         totalTokens += amount;
+        emit TotalTokensIncreased(amount);
     }
 }

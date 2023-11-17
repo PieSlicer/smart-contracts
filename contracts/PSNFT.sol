@@ -20,7 +20,7 @@ contract PSNFT is ERC721, Ownable {
         address _creator,
         uint _price,
         address _distributor
-    ) ERC721(_tokenName, _tokenSymbol) Ownable(creator) {
+    ) ERC721(_tokenName, _tokenSymbol) Ownable(_creator) {
         creator = _creator;
         price = _price;
         distributor = _distributor;
