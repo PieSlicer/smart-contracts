@@ -15,7 +15,7 @@ contract PSNFT is ERC721URIStorage, Ownable {
     address public creator;
     uint public price;
     address public ditrbutionTreasury;
-    string private _baseUri; 
+    string public baseUri; 
 
     constructor(
         string memory _tokenName,
@@ -28,7 +28,7 @@ contract PSNFT is ERC721URIStorage, Ownable {
         price = _price;
         ditrbutionTreasury = _distributor;
         pieSlicer = PieSlicer(msg.sender);
-        _baseUri = "https://bafybeiabeuzqergdgpb7u2773qekwxns2jrtrugd6nzkyvhu7gfbbkbts4.ipfs.dweb.link/";
+        baseUri = "ipfs://bafybeieslvbdtrq7rxwvrxfbmqu7thqlup2xdfhwt7ac7w4heqvk4vm52y";
     }
 
     function mint(uint tokenId) public payable {
@@ -42,10 +42,6 @@ contract PSNFT is ERC721URIStorage, Ownable {
         payable(ditrbutionTreasury).transfer(distributorShare);
         payable(creator).transfer(creatorShare);
         _safeMint(msg.sender, tokenId);
-    }
-
-    function _baseURI() internal override view returns(string memory) { 
-        return _baseUri;
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {

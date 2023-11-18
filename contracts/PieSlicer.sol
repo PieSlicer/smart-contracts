@@ -2,12 +2,13 @@
 pragma solidity ^0.8.20;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {PSNFT} from "./PSNFT.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import {DistributionTreasury} from "./DistributionTreasury.sol";
-import {QuadraticTreasuryDistribution} from "./QDistributionTreasury.sol";
+
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+
+import {PSNFT} from "./PSNFT.sol";
+import {SqrTreasury} from "./SqrTreasury.sol";
 
 contract PieSlicer is AccessControl {
     address[] holders;
@@ -34,9 +35,7 @@ contract PieSlicer is AccessControl {
     constructor() {
         _grantRole(ADMIN_ROLE, _msgSender());
 
-        distributionTreasury = address(
-            new QuadraticTreasuryDistribution()
-        );
+        distributionTreasury = address(new SqrTreasury());
     }
 
     event PSNFTDeployed(address nft);

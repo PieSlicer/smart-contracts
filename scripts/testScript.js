@@ -1,4 +1,4 @@
-const pieSlicer = "0xAD19381A1770cAc150c612a326B856796bc9A871";
+const pieSlicer = "0xeD882a05dd0203c5B3d4430dc4FB155F607F9595";
 
 const { assert } = require("chai");
 var ethers = require("ethers");

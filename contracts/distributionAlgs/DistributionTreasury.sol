@@ -2,10 +2,9 @@
 pragma solidity ^0.8.20;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {PSNFT} from "./PSNFT.sol";
+import {PSNFT} from "../PSNFT.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "./PieSlicer.sol";
-import "hardhat/console.sol";
+import "../PieSlicer.sol";
 
 contract DistributionTreasury {
     uint public distributionTime;
@@ -29,7 +28,6 @@ contract DistributionTreasury {
         uint slice = address(this).balance / totalSlices;
         require(slice > 0, "nothing to distribute");
         for (uint i = 0; i < allOwners.length; i++) {
-            console.log(slice, pieSlicer.holderBalance(allOwners[i]));
 
             payable(allOwners[i]).transfer(
                 slice * pieSlicer.holderBalance(allOwners[i])
