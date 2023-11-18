@@ -1,4 +1,4 @@
-const pieSlicer = "0xeD882a05dd0203c5B3d4430dc4FB155F607F9595";
+const pieSlicer = "0x25Afa4D47F60749F5ea832dAE78aEC80Ab7B0a78";
 
 const { assert } = require("chai");
 var ethers = require("ethers");
@@ -7,7 +7,7 @@ require("dotenv").config();
 
 var psnftAbi = require("../artifacts/contracts/PSNFT.sol/PSNFT.json").abi;
 var pieSlicerAbi = require("../artifacts/contracts/PieSlicer.sol/PieSlicer.json").abi;
-var distributionAbi = require("../artifacts/contracts/DistributionTreasury.sol/DistributionTreasury.json").abi;
+var distributionAbi = require("../artifacts/contracts/SqrTreasury.sol/SqrTreasury.json").abi;
 
 const provider = new ethers.providers.JsonRpcProvider(
   "https://rpc.ankr.com/eth_sepolia/"

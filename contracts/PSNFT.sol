@@ -67,7 +67,7 @@ contract PSNFT is ERC721URIStorage, Ownable {
     function tokenURI(
         uint256 tokenId
     ) public view override returns (string memory) {
-        return string.concat(_baseURI(), Strings.toString(tokenId), ".PNG");
+        return string.concat(baseUri, Strings.toString(tokenId), ".json");
     }
 
     /**
