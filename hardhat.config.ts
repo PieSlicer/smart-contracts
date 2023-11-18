@@ -4,7 +4,7 @@ import { HardhatUserConfig } from "hardhat/config";
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-contract-sizer");
-require("@nomicfoundation/hardhat-foundry");
+// require("@nomicfoundation/hardhat-foundry");
 require("dotenv").config();
 
 const config: HardhatUserConfig = {

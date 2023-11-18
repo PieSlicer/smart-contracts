@@ -1,18 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import {ERC721URIStorage} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 import "./PieSlicer.sol";
 
-contract PSNFT is ERC721, Ownable {
+contract PSNFT is ERC721URIStorage, Ownable {
     uint256 private _nextTokenId;
 
     PieSlicer pieSlicer;
     address public creator;
-    uint price;
+    uint public price;
     address public ditrbutionTreasury;
+    string private _baseUri; 
 
     constructor(
         string memory _tokenName,
@@ -25,6 +28,7 @@ contract PSNFT is ERC721, Ownable {
         price = _price;
         ditrbutionTreasury = _distributor;
         pieSlicer = PieSlicer(msg.sender);
+        _baseUri = "https://bafybeiabeuzqergdgpb7u2773qekwxns2jrtrugd6nzkyvhu7gfbbkbts4.ipfs.dweb.link/";
     }
 
     function mint(uint tokenId) public payable {
@@ -38,6 +42,14 @@ contract PSNFT is ERC721, Ownable {
         payable(ditrbutionTreasury).transfer(distributorShare);
         payable(creator).transfer(creatorShare);
         _safeMint(msg.sender, tokenId);
+    }
+
+    function _baseURI() internal override view returns(string memory) { 
+        return _baseUri;
+    }
+
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        return string.concat(_baseURI(), Strings.toString(tokenId), ".PNG");
     }
 
     function _safeTransfer(
@@ -68,7 +80,7 @@ contract PSNFT is ERC721, Ownable {
 
     function supportsInterface(
         bytes4 interfaceId
-    ) public view override(ERC721) returns (bool) {
+    ) public view override(ERC721URIStorage) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }

@@ -50,17 +50,17 @@ describe("PieSlicer", function () {
       const psnft = PSNFT.attach(nftAddress);
 
       const distributor = await psnft.ditrbutionTreasury();
-      const tx = await psnft.mint(1, { value: ONE_GWEI });
+      const tx = await psnft.connect(buyer).mint(1, { value: ONE_GWEI });
       const a = await tx.wait();
 
-      const balance = await psnft.balanceOf(deployer.address);
+      const balance = await psnft.balanceOf(buyer.address);
       expect(balance.toString()).to.eq("1");
 
       const slices = await pieSlicer.totalTokens();
       expect(slices.toString()).to.eq("1");
 
 
-      const holderBalance = await pieSlicer.holderBalance(deployer.address);
+      const holderBalance = await pieSlicer.holderBalance(buyer.address);
       expect(holderBalance.toString()).to.eq("1");
 
     });
@@ -77,14 +77,14 @@ describe("PieSlicer", function () {
       const a = await tx.wait();
 
       const balance = await psnft.balanceOf(buyer.address);
-      expect(balance.toString()).to.eq("1");
+      expect(balance.toString()).to.eq("2");
 
       const slices = await pieSlicer.totalTokens();
       expect(slices.toString()).to.eq("2");
 
 
       const holderBalance = await pieSlicer.holderBalance(buyer.address);
-      expect(holderBalance.toString()).to.eq("1");
+      expect(holderBalance.toString()).to.eq("2");
 
     });
 
@@ -100,41 +100,63 @@ describe("PieSlicer", function () {
       await (await psnft.connect(buyer1).mint(4, { value: ONE_GWEI })).wait();
       await (await psnft.connect(buyer1).mint(5, { value: ONE_GWEI })).wait();
       await (await psnft.connect(buyer2).mint(6, { value: ONE_GWEI })).wait();
+      await (await psnft.connect(buyer2).mint(7, { value: ONE_GWEI })).wait();
+      await (await psnft.connect(buyer2).mint(8, { value: ONE_GWEI })).wait();
+      await (await psnft.connect(buyer2).mint(9, { value: ONE_GWEI })).wait();
 
 
       const balance = await psnft.balanceOf(buyer.address);
-      expect(balance.toString()).to.eq("2");
+      expect(balance.toString()).to.eq("3");
 
       const slices = await pieSlicer.totalTokens();
-      expect(slices.toString()).to.eq("6");
+      expect(slices.toString()).to.eq("9");
 
 
       const holderBalance = await pieSlicer.holderBalance(buyer.address);
-      expect(holderBalance.toString()).to.eq("2");
+      expect(holderBalance.toString()).to.eq("3");
+
+      const tokenUri = await psnft.tokenURI(1);
+      expect(tokenUri).to.eq('https://bafybeiabeuzqergdgpb7u2773qekwxns2jrtrugd6nzkyvhu7gfbbkbts4.ipfs.dweb.link/1.PNG');
     });
 
     it("Should distribute funds", async function () {
 
       const distributor = await pieSlicer.distributionTreasury();
 
-      const wew = await ethers.provider.getBalance(distributor);
-      console.log('treasury distribution before: ', wew);
+      const distributorBefore = await ethers.provider.getBalance(distributor);
+      console.log('treasury distribution before: ', distributorBefore.toString());
 
 
       const DistributionTreasury = await ethers.getContractFactory("DistributionTreasury");
       const distributionTreasury = DistributionTreasury.attach(distributor);
-      const v = await ethers.provider.getBalance(buyer.address);
-      console.log('user balance before: ', v);
-      const a = await distributionTreasury.distributeShares();
-      await a.wait();
+      const buyerBefore1 = await ethers.provider.getBalance(buyer.address);
+      console.log('user 1 balance before: ', buyerBefore1.toString());
 
-      const v1 = await ethers.provider.getBalance(buyer.address);
-      console.log('user balance after: ', v1);
+      const buyerBefore2 = await ethers.provider.getBalance(buyer1.address);
+      console.log('user 2 balance before: ', buyerBefore2.toString());
+
+      const buyerBefore3 = await ethers.provider.getBalance(buyer2.address);
+      console.log('user 3 balance before: ', buyerBefore3.toString());
+
+      const events = await( await distributionTreasury.distributeShares()).wait();
+      // console.log(events);
+
+      const buyerAfter1 = await ethers.provider.getBalance(buyer.address);
+      console.log('user 1 balance after:  ', buyerAfter1.toString());
+
+      const buyerAfter2 = await ethers.provider.getBalance(buyer1.address);
+      console.log('user 2 balance after:  ', buyerAfter2.toString());
+      
+      const buyerAfter3 = await ethers.provider.getBalance(buyer2.address);
+      console.log('user 3 balance after:  ', buyerAfter3.toString());
 
 
-      const we = await ethers.provider.getBalance(distributor);
-      console.log('treasury distribution after: ', we);
+      const treasuryAfter = await ethers.provider.getBalance(distributor);
+      console.log('treasury distribution after: ', treasuryAfter.toString());
 
+      console.log('user 1 reward: ', buyerAfter1 - buyerBefore1);
+      console.log('user 2 reward: ', buyerAfter2 - buyerBefore2);
+      console.log('user 3 reward: ', buyerAfter3 - buyerBefore3);
 
     });
   });

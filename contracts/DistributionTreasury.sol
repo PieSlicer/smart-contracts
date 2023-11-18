@@ -8,16 +8,18 @@ import "./PieSlicer.sol";
 import "hardhat/console.sol";
 
 contract DistributionTreasury {
-    // uint distributionTime;
+    uint public distributionTime;
     PieSlicer pieSlicer;
 
+    // todo: set distribution time differently;
     constructor(PieSlicer _pieSlicer) {
-        // distributionTime = _distributionTime;
+        distributionTime = block.timestamp + 86400;
         pieSlicer = _pieSlicer;
     }
 
     event DistributionCompleted(uint totalSlices, uint slice);
 
+    // todo: add check for time of distribution
     function distributeShares() external {
         address[] memory allOwners = pieSlicer.getHolders();
 
@@ -27,7 +29,7 @@ contract DistributionTreasury {
         uint slice = address(this).balance / totalSlices;
         require(slice > 0, "nothing to distribute");
         for (uint i = 0; i < allOwners.length; i++) {
-        console.log(slice,pieSlicer.holderBalance(allOwners[i]));
+            console.log(slice, pieSlicer.holderBalance(allOwners[i]));
 
             payable(allOwners[i]).transfer(
                 slice * pieSlicer.holderBalance(allOwners[i])
@@ -37,6 +39,19 @@ contract DistributionTreasury {
         emit DistributionCompleted(totalSlices, slice);
     }
 
-    receive() external payable {   
+    function getRewardPerHolder(address holder) public view returns (uint) {
+        uint totalSlices = pieSlicer.totalTokens();
+        if (totalSlices == 0) return 0;
+
+        uint slice = address(this).balance / totalSlices;
+        if (slice == 0) return 0;
+
+        return slice * pieSlicer.holderBalance(holder);
+    }
+
+    event TreasuryFunded(uint amount);
+
+    receive() external payable {
+        emit TreasuryFunded(msg.value);
     }
 }
