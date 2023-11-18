@@ -76,6 +76,7 @@ contract PieSlicer is AccessControl {
         address holder,
         uint amount
     ) public onlyPSNContract {
+        if (holderBalance[holder] == 0) holders.push(holder);
         holderBalance[holder] += amount;
         emit HolderBalanceChange(
             holder,
