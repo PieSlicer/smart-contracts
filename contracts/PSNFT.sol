@@ -12,7 +12,7 @@ contract PSNFT is ERC721, Ownable {
     PieSlicer pieSlicer;
     address public creator;
     uint price;
-    address distributor;
+    address public ditrbutionTreasury;
 
     constructor(
         string memory _tokenName,
@@ -23,7 +23,8 @@ contract PSNFT is ERC721, Ownable {
     ) ERC721(_tokenName, _tokenSymbol) Ownable(_creator) {
         creator = _creator;
         price = _price;
-        distributor = _distributor;
+        ditrbutionTreasury = _distributor;
+        pieSlicer = PieSlicer(msg.sender);
     }
 
     function mint(uint tokenId) public payable {
@@ -34,7 +35,7 @@ contract PSNFT is ERC721, Ownable {
         pieSlicer.increaseHolderBalance(msg.sender, 1);
         pieSlicer.increaseTotalTokens(1);
 
-        payable(distributor).transfer(distributorShare);
+        payable(ditrbutionTreasury).transfer(distributorShare);
         payable(creator).transfer(creatorShare);
         _safeMint(msg.sender, tokenId);
     }

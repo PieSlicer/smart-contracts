@@ -34,4 +34,7 @@ contract DistributionTreasury {
 
         emit DistributionCompleted(totalSlices, slice);
     }
+
+    receive() external payable {   
+    }
 }
