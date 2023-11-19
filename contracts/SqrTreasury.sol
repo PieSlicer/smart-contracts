@@ -111,8 +111,10 @@ contract SqrTreasury {
             // Distribute funds to each holder based on their share
             uint256 amountToDistribute = (shares[i] * totalAmount) /
                 totalShares;
-            payable(holders[i]).transfer(amountToDistribute);
-            emit RewardTransfered(holders[i], amountToDistribute);
+            if (amountToDistribute > 0) {
+                payable(holders[i]).transfer(amountToDistribute);
+                emit RewardTransfered(holders[i], amountToDistribute);
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-# Pie Slicer | Eth Istanbul 2021
+# Pie Slicer | Eth Istanbul 2023
 A profit-sharing network, automated and founded on a square root function, facilitating a fair distribution of profits among its members
 
 ## Problem

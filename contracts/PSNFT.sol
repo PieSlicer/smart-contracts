@@ -40,7 +40,7 @@ contract PSNFT is ERC721URIStorage, Ownable {
         price = _price;
         ditrbutionTreasury = _distributor;
         pieSlicer = PieSlicer(msg.sender);
-        baseUri = "ipfs://bafybeieslvbdtrq7rxwvrxfbmqu7thqlup2xdfhwt7ac7w4heqvk4vm52y";
+        baseUri = "ipfs://bafybeieslvbdtrq7rxwvrxfbmqu7thqlup2xdfhwt7ac7w4heqvk4vm52y/";
     }
 
     /**

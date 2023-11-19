@@ -116,7 +116,7 @@ describe("PieSlicer", function () {
       expect(holderBalance.toString()).to.eq("3");
 
       const tokenUri = await psnft.tokenURI(1);
-      expect(tokenUri).to.eq('https://bafybeiabeuzqergdgpb7u2773qekwxns2jrtrugd6nzkyvhu7gfbbkbts4.ipfs.dweb.link/1.PNG');
+      expect(tokenUri).to.eq('ipfs://bafybeieslvbdtrq7rxwvrxfbmqu7thqlup2xdfhwt7ac7w4heqvk4vm52y/1.json');
     });
 
     it("Should distribute funds", async function () {
