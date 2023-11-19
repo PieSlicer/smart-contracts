@@ -1,16 +1,21 @@
 # Pie Slicer | Eth Istanbul 2023
 A profit-sharing network, automated and founded on a square root function, facilitating a fair distribution of profits among its members
 
-## Problem
+# Problem
 We gotta fund them public goods! 
 Getting funds for a non-commercial project is difficult. 
 
-## Solution
+# Solution
 Transform art into a dynamic loop of creation and distribution. NFT purchases fund artists, community treasuries, and future projects, creating a continuous cycle of value. With decentralized governance and strategic investment, it's not just an NFT marketplace; it's a thriving ecosystem where every participant plays a role in shaping the artistic landscape. 
-## Tech Stack
-#### Smart Contracts
 
-## Tech Architecture
+# Tech Stack
+1. Solidity Smart Contracts deployed on Gnosis Chain
+2. PowerPool for automation of the distribution of the treasury
+3. Multibass for Admin, Deployments and Event Querying
+4. React & NextJS Frontend
+5. Alchemi for NFT management
+
+# Tech Architecture
 
 ## Smart contracts
 
