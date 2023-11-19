@@ -1,4 +1,7 @@
 # Pie Slicer | Eth Istanbul 2023
+
+## Pitch Deck: https://drive.google.com/file/d/1YdFab9mxvfu6uwtDeOnS6Zuk_OoeaI2d/view?usp=drive_link
+
 A profit-sharing network, automated and founded on a square root function, facilitating a fair distribution of profits among its members
 
 # Problem
