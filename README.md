@@ -1,10 +1,10 @@
 # Pie Slicer | Eth Istanbul 2023
 
 ## Links:
- [Pitch Deck](https://drive.google.com/file/d/1YdFab9mxvfu6uwtDeOnS6Zuk_OoeaI2d/view?usp=drive_link)
- [Live Demo] (https://pieslicer.xyz)
- [Frontend Repo] (https://github.com/PieSlicer/frontend)
- [Submission Link] (https://ethglobal.com/showcase/pieslicer-cb3xx)
+ * [Pitch Deck](https://drive.google.com/file/d/1YdFab9mxvfu6uwtDeOnS6Zuk_OoeaI2d/view?usp=drive_link)
+ * [Live Demo](https://pieslicer.xyz)
+ * [Frontend Repo](https://github.com/PieSlicer/frontend)
+ * [Submission Link](https://ethglobal.com/showcase/pieslicer-cb3xx)
 
 A profit-sharing network, automated and founded on a square root function, facilitating a fair distribution of profits among its members
 
