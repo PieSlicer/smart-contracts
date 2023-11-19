@@ -16,14 +16,13 @@ Getting funds for a non-commercial project is difficult.
 Transform art into a dynamic loop of creation and distribution. NFT purchases fund artists, community treasuries, and future projects, creating a continuous cycle of value. With decentralized governance and strategic investment, it's not just an NFT marketplace; it's a thriving ecosystem where every participant plays a role in shaping the artistic landscape. 
 
 # Features
-This marketplace is designed to easily join our network by buying NFTs even without a wallet (social login).
-
-The treasury and reward distributions are updated in real-time on the treasury page and each holder can follow their own share of the pie.
+* This marketplace is designed to easily join our network by buying NFTs even without a wallet (social login).
+* The treasury and reward distributions are updated in real-time on the treasury page and each holder can follow their own share of the pie.
 
 # Upcoming features
-We want to make the markeplace even more accessible by allowing users to top up their wallet with a credit card using Safe OnRamp kit
-We will add a personal dashboard for the users to follow their NFTs and their treasury shares
-We will add a DAO voting page to allow the community to vote on the new projects to fund and apply for funding
+* We want to make the markeplace even more accessible by allowing users to top up their wallet with a credit card using Safe OnRamp kit
+* We will add a personal dashboard for the users to follow their NFTs and their treasury shares
+* We will add a DAO voting page to allow the community to vote on the new projects to fund and apply for funding
 
 # Tech Stack
 1. Solidity Smart Contracts deployed on Gnosis Chain
@@ -46,9 +45,9 @@ We will add a DAO voting page to allow the community to vote on the new projects
 | Uly PSNFT   | [0x5E46758F854cA69Ce59f5D18c0E6BcEd805fc201](https://sepolia.etherscan.io/address/0x5E46758F854cA69Ce59f5D18c0E6BcEd805fc201)        |
 | Treasury    | [0x8F12a1B697762E41aE6271669354cF133F6F9911](https://sepolia.etherscan.io/address/0x8F12a1B697762E41aE6271669354cF133F6F9911)        |
 
-[Multibaas deployment](https://jsr5t5k46baslix37sz3bzot5a.multibaas.com)
-[Powerpool Job](https://app.powerpool.finance/#/sepolia/explorer/jobs/0xbdE2Aed54521000DC033B67FB522034e0F93A7e5/0x47912e70d78f15201580d525418d2c53ce7c5df709020441714c0e1b2db27598/)
-[Live Demo](https://pieslicer.xyz)
+* [Multibaas deployment](https://jsr5t5k46baslix37sz3bzot5a.multibaas.com)
+* [Powerpool Job](https://app.powerpool.finance/#/sepolia/explorer/jobs/0xbdE2Aed54521000DC033B67FB522034e0F93A7e5/0x47912e70d78f15201580d525418d2c53ce7c5df709020441714c0e1b2db27598/)
+* [Live Demo](https://pieslicer.xyz)
 
 ## Smart contracts
 
